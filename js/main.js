@@ -111,7 +111,7 @@ function addPopupBox(){
 //displays analysis data to the modal
 function displayAnalysis(){
 
-  var percentScrolled = getPercentScrolled();
+  var percentScrolled = (pixelsScrolled + $(window).height()) / $(document).height()*100;
 
   $('#percent-page').append('User has seen '+percentScrolled+'% of the page.');
   $('#total-distance').append('User has scrolled '+pixelsScrolled+' pixels down the page');
@@ -120,21 +120,7 @@ function displayAnalysis(){
   $('#section-time').append('Who knows how much time on each section?');
 }
 
-function getPercentScrolled(){
-  var maxScroll = getMaxScrollHeight();
-  var percentScrolled = (pixelsScrolled/maxScroll*100);
-}
 
-function getMaxScrollHeight(){
-
-  var maxScroll = $(document).height()-$(window).height();
-  // console.log('pixelsScrolled '+pixelsScrolled);
-  // console.log('maxScroll '+maxScroll);
-  // console.log('$(document).height() = '+$(document).height());
-  // console.log('$(window).height() = '+$(window).height());
-  return maxScroll;
-
-}
 
 
 
