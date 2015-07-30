@@ -1,0 +1,15 @@
+/* add custom styles */
+
+body {
+  padding-top: 70px;
+}
+
+footer {
+  margin: 50px 0;
+}
+
+#analytics {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
