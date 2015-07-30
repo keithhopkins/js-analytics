@@ -18,7 +18,7 @@ $(document).on('ready', function() {
     clearInterval(signUpInterval);
   });
 
-  //displays analytics data in a lightbox upon clicking analytics button
+  //displays analytics data in a modal upon clicking analytics button
   $('#analytics').on('click',function(event){
     event.preventDefault();
     clearInterval(onPageInterval);
@@ -51,6 +51,7 @@ $(document).on('ready', function() {
   });
 });
 
+//calls all methods needed for creating the modal
 function displayModal(){
   addBlockPage();
   addPopupBox();
@@ -63,6 +64,7 @@ function addBlockPage(){
   blockPage.appendTo('body');
 }
 
+//styles modal and block page and close button
 function addModalStyles(){
   var pageHeight = $(document).height();
   var pageWidth = $(document).width();
@@ -93,6 +95,7 @@ function addModalStyles(){
 
 }
 
+//adds the modal to the DOM
 function addPopupBox(){
   var popupBox = $('<div id="modal">');
   popupBox.append('<h3>Page Analysis</h3>');
@@ -105,9 +108,11 @@ function addPopupBox(){
   $('body').append(popupBox);
 }
 
+//displays analysis data to the modal
 function displayAnalysis(){
-  var maxScroll = getMaxScrollHeight();
-  var percentScrolled = (pixelsScrolled/maxScroll*100);
+
+  var percentScrolled = getPercentScrolled();
+
   $('#percent-page').append('User has seen '+percentScrolled+'% of the page.');
   $('#total-distance').append('User has scrolled '+pixelsScrolled+' pixels down the page');
   $('#sign-up-time').append('User spent '+secondsBeforeSignUp+' seconds on the page before pressing sign up button');
@@ -115,31 +120,21 @@ function displayAnalysis(){
   $('#section-time').append('Who knows how much time on each section?');
 }
 
+function getPercentScrolled(){
+  var maxScroll = getMaxScrollHeight();
+  var percentScrolled = (pixelsScrolled/maxScroll*100);
+}
+
 function getMaxScrollHeight(){
 
   var maxScroll = $(document).height()-$(window).height();
-  console.log('pixelsScrolled '+pixelsScrolled);
-  console.log('maxScroll '+maxScroll);
-  console.log('$(document).height() = '+$(document).height());
-  console.log('$(window).height() = '+$(window).height());
+  // console.log('pixelsScrolled '+pixelsScrolled);
+  // console.log('maxScroll '+maxScroll);
+  // console.log('$(document).height() = '+$(document).height());
+  // console.log('$(window).height() = '+$(window).height());
   return maxScroll;
 
 }
-/*
-  <div id='modal'>
-    <h3>Page Analysis</h3>
-    <div id='percent-page'>
-    </div>
-    <div id='total-distance'>
-    </div>
-    <div id='sign-up-time'>
-    </div>
-    <div id='page-time'>
-    </div>
-    <div id='section-time'>
-    </div>
-  </div>
-*/
 
 
 
