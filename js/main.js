@@ -8,40 +8,42 @@ var pixelsScrolled=0;
 
 
 $(document).on('ready', function() {
-  
+  window.scrollTo(0,0);
 
   var onPageInterval = setInterval(function(){secondsOnPage++;},1000);
   var signUpInterval = setInterval(function(){secondsBeforeSignUp++;},1000);
 
+  //stops the signUpInterval when you click sign up
   $('#sign-up').on('click',function(event){
     clearInterval(signUpInterval);
   });
 
+  //displays analytics data in a lightbox upon clicking analytics button
   $('#analytics').on('click',function(event){
     event.preventDefault();
     clearInterval(onPageInterval);
     clearInterval(signUpInterval);
     displayModal();
     
-  $('#close').on('click',function(event){
-    $('#modal').remove();
-    $('.block-page').remove();
-    if(secondsOnPage===secondsBeforeSignUp){
-      signUpInterval=setInterval(function(){secondsBeforeSignUp++;},1000);
-    }
-    onPageInterval = setInterval(function(){secondsOnPage++;},1000);
+    //closes light box upon clicking 'close'
+    $('#close').on('click',function(event){
+      $('#modal').remove();
+      $('.block-page').remove();
+      if(secondsOnPage===secondsBeforeSignUp){
+        signUpInterval=setInterval(function(){secondsBeforeSignUp++;},1000);
+      }
+      onPageInterval = setInterval(function(){secondsOnPage++;},1000);
+    });
+
+    $('section').on('mouseenter',function(){
+      var index = $('section').index(this);
+      console.log(index);
+    });
+
   });
 
-  $('section').on('mouseenter',function(){
-    var index = $('section').index(this);
-    console.log(index);
-  });
-
-});
-
-
-  $(document).scroll(function(){
-    
+  //keeps track of the max distance scrolled
+  $(document).scroll(function(){ 
     var scroll = $(document).scrollTop();
     if(scroll>pixelsScrolled){
       pixelsScrolled=scroll;
@@ -104,15 +106,24 @@ function addPopupBox(){
 }
 
 function displayAnalysis(){
-  console.log('pixelsScrolled '+pixelsScrolled);
-  var maxScroll = $(document).height()-$(window).height();
-  console.log('maxScroll '+maxScroll);
+  var maxScroll = getMaxScrollHeight();
   var percentScrolled = (pixelsScrolled/maxScroll*100);
   $('#percent-page').append('User has seen '+percentScrolled+'% of the page.');
   $('#total-distance').append('User has scrolled '+pixelsScrolled+' pixels down the page');
   $('#sign-up-time').append('User spent '+secondsBeforeSignUp+' seconds on the page before pressing sign up button');
   $('#page-time').append('User has spent '+secondsOnPage+' seconds on the page');
   $('#section-time').append('Who knows how much time on each section?');
+}
+
+function getMaxScrollHeight(){
+
+  var maxScroll = $(document).height()-$(window).height();
+  console.log('pixelsScrolled '+pixelsScrolled);
+  console.log('maxScroll '+maxScroll);
+  console.log('$(document).height() = '+$(document).height());
+  console.log('$(window).height() = '+$(window).height());
+  return maxScroll;
+
 }
 /*
   <div id='modal'>
